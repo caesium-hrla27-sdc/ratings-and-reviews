@@ -71,7 +71,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/ratings').then(results => {
+    axios.get('/ratings/5')
+    .then(results => {
       let reviewNum =
         results.data.fiveStarReviews.length +
         results.data.fourStarReviews.length +

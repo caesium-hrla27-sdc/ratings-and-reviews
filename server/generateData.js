@@ -16,6 +16,9 @@ var skinConcernsArr = ['Acne', 'Aging', 'Blackheads', 'Calluses', 'Cellulite', '
 
 
 var id = 0;
+
+// generates 100 products
+
 var generateData = function () {
   for(var i = 0; i < 100; i++) {
       id++;
@@ -26,7 +29,10 @@ var generateData = function () {
       let twoStarReviews =[];
       let oneStarReviews =[];
 
-      let loopLength = Math.floor(Math.random() * 150) + 60
+      // FIVE STAR REVIEWS
+        // generates anywhere from 60-150 reviews
+
+      let loopLength = Math.ceil(Math.random() * 2)
 
       for(let i = 0; i < loopLength; i++) {
           let reviewObj = {};
@@ -51,7 +57,11 @@ var generateData = function () {
           fiveStarReviews.push(reviewDoc);
 
       }
-      loopLength = Math.floor(Math.random() * 50) + 25
+
+      // FOUR STAR REVIEWS
+        // 25-50 reviews
+
+      loopLength = Math.ceil(Math.random() * 2)
 
       for(let i = 0; i < loopLength; i++) {
           let reviewObj = {};
@@ -77,7 +87,9 @@ var generateData = function () {
 
       }
 
-      loopLength = Math.floor(Math.random() * 25) + 10
+
+
+      loopLength = Math.ceil(Math.random() * 2)
 
       for(let i = 0; i < loopLength; i++) {
           let reviewObj = {};
@@ -103,7 +115,7 @@ var generateData = function () {
 
       }
 
-      loopLength = Math.floor(Math.random() * 25) + 10
+      loopLength = Math.ceil(Math.random() * 2)
 
       for(let i = 0; i < loopLength; i++) {
           let reviewObj = {};
@@ -129,12 +141,12 @@ var generateData = function () {
 
       }
 
-      loopLength = Math.floor(Math.random() * 15) + 0
+      loopLength = Math.ceil(Math.random() * 2)
 
       for(let i = 0; i < loopLength; i++) {
           let reviewObj = {};
           reviewObj.username = faker.name.firstName();
-          reviewObj.ratingsNumber = 4
+          reviewObj.ratingsNumber = 1
           reviewObj.eyeColor = eyeColorArr[Math.floor(Math.random() * 4) + 0]
           reviewObj.hairColor = hairColorArr[Math.floor(Math.random() * 5) + 0]
           reviewObj.skinTone = skinToneArr[Math.floor(Math.random() * 8) + 0]
