@@ -1,5 +1,6 @@
 var faker = require('faker');
-var { Review, Product } = require('../database')
+var { Review, Product } = require('../database');
+var fs = require('fs');
 
 var eyeColorArr = ['Blue', 'Brown', 'Green', 'Gray', 'Hazel'];
 
@@ -17,10 +18,14 @@ var skinConcernsArr = ['Acne', 'Aging', 'Blackheads', 'Calluses', 'Cellulite', '
 
 var id = 0;
 
+const randomizeArr = (arr) => {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 // generates 100 products
 
 var generateData = function () {
-  for(var i = 0; i < 100; i++) {
+  for(var i = 0; i < 10000; i++) {
       id++;
       let productName = faker.lorem.words();
       let fiveStarReviews =[];
@@ -38,12 +43,12 @@ var generateData = function () {
           let reviewObj = {};
           reviewObj.username = faker.name.firstName();
           reviewObj.ratingsNumber = 5
-          reviewObj.eyeColor = eyeColorArr[Math.floor(Math.random() * 4) + 0]
-          reviewObj.hairColor = hairColorArr[Math.floor(Math.random() * 5) + 0]
-          reviewObj.skinTone = skinToneArr[Math.floor(Math.random() * 8) + 0]
-          reviewObj.skinType = skinTypeArr[Math.floor(Math.random() * 3) + 0]
-          reviewObj.ageRange = ageRangeArr[Math.floor(Math.random() * 5) + 0]
-          reviewObj.skinConcerns = skinConcernsArr[Math.floor(Math.random() * 12) + 0]
+          reviewObj.eyeColor = randomizeArr(eyeColorArr);
+          reviewObj.hairColor = randomizeArr(hairColorArr);
+          reviewObj.skinTone = randomizeArr(skinToneArr);
+          reviewObj.skinType = randomizeArr(skinTypeArr);
+          reviewObj.ageRange = randomizeArr(ageRangeArr);
+          reviewObj.skinConcerns = randomizeArr(skinConcernsArr);
           reviewObj.notHelpfulCount = 0;
           reviewObj.helpfulCount = 0;
           reviewObj.date = faker.date.between('2017-01-01', '2019-02-06');
@@ -67,12 +72,12 @@ var generateData = function () {
           let reviewObj = {};
           reviewObj.username = faker.name.firstName();
           reviewObj.ratingsNumber = 4
-          reviewObj.eyeColor = eyeColorArr[Math.floor(Math.random() * 4) + 0]
-          reviewObj.hairColor = hairColorArr[Math.floor(Math.random() * 5) + 0]
-          reviewObj.skinTone = skinToneArr[Math.floor(Math.random() * 8) + 0]
-          reviewObj.skinType = skinTypeArr[Math.floor(Math.random() * 3) + 0]
-          reviewObj.ageRange = ageRangeArr[Math.floor(Math.random() * 5) + 0]
-          reviewObj.skinConcerns = skinConcernsArr[Math.floor(Math.random() * 12) + 0]
+          reviewObj.eyeColor = randomizeArr(eyeColorArr);
+          reviewObj.hairColor = randomizeArr(hairColorArr);
+          reviewObj.skinTone = randomizeArr(skinToneArr);
+          reviewObj.skinType = randomizeArr(skinTypeArr);
+          reviewObj.ageRange = randomizeArr(ageRangeArr);
+          reviewObj.skinConcerns = randomizeArr(skinConcernsArr);
           reviewObj.notHelpfulCount = 0;
           reviewObj.helpfulCount = 0;
           reviewObj.date = faker.date.between('2017-01-01', '2019-02-06');
@@ -95,12 +100,12 @@ var generateData = function () {
           let reviewObj = {};
           reviewObj.username = faker.name.firstName();
           reviewObj.ratingsNumber = 3
-          reviewObj.eyeColor = eyeColorArr[Math.floor(Math.random() * 4) + 0]
-          reviewObj.hairColor = hairColorArr[Math.floor(Math.random() * 5) + 0]
-          reviewObj.skinTone = skinToneArr[Math.floor(Math.random() * 8) + 0]
-          reviewObj.skinType = skinTypeArr[Math.floor(Math.random() * 3) + 0]
-          reviewObj.ageRange = ageRangeArr[Math.floor(Math.random() * 5) + 0]
-          reviewObj.skinConcerns = skinConcernsArr[Math.floor(Math.random() * 12) + 0]
+          reviewObj.eyeColor = randomizeArr(eyeColorArr);
+          reviewObj.hairColor = randomizeArr(hairColorArr);
+          reviewObj.skinTone = randomizeArr(skinToneArr);
+          reviewObj.skinType = randomizeArr(skinTypeArr);
+          reviewObj.ageRange = randomizeArr(ageRangeArr);
+          reviewObj.skinConcerns = randomizeArr(skinConcernsArr);
           reviewObj.notHelpfulCount = 0;
           reviewObj.helpfulCount = 0;
           reviewObj.date = faker.date.between('2017-01-01', '2019-02-06');
@@ -121,12 +126,12 @@ var generateData = function () {
           let reviewObj = {};
           reviewObj.username = faker.name.firstName();
           reviewObj.ratingsNumber = 2
-          reviewObj.eyeColor = eyeColorArr[Math.floor(Math.random() * 4) + 0]
-          reviewObj.hairColor = hairColorArr[Math.floor(Math.random() * 5) + 0]
-          reviewObj.skinTone = skinToneArr[Math.floor(Math.random() * 8) + 0]
-          reviewObj.skinType = skinTypeArr[Math.floor(Math.random() * 3) + 0]
-          reviewObj.ageRange = ageRangeArr[Math.floor(Math.random() * 5) + 0]
-          reviewObj.skinConcerns = skinConcernsArr[Math.floor(Math.random() * 12) + 0]
+          reviewObj.eyeColor = randomizeArr(eyeColorArr);
+          reviewObj.hairColor = randomizeArr(hairColorArr);
+          reviewObj.skinTone = randomizeArr(skinToneArr);
+          reviewObj.skinType = randomizeArr(skinTypeArr);
+          reviewObj.ageRange = randomizeArr(ageRangeArr);
+          reviewObj.skinConcerns = randomizeArr(skinConcernsArr);
           reviewObj.notHelpfulCount = 0;
           reviewObj.helpfulCount = 0;
           reviewObj.date = faker.date.between('2017-01-01', '2019-02-06');
@@ -147,12 +152,12 @@ var generateData = function () {
           let reviewObj = {};
           reviewObj.username = faker.name.firstName();
           reviewObj.ratingsNumber = 1
-          reviewObj.eyeColor = eyeColorArr[Math.floor(Math.random() * 4) + 0]
-          reviewObj.hairColor = hairColorArr[Math.floor(Math.random() * 5) + 0]
-          reviewObj.skinTone = skinToneArr[Math.floor(Math.random() * 8) + 0]
-          reviewObj.skinType = skinTypeArr[Math.floor(Math.random() * 3) + 0]
-          reviewObj.ageRange = ageRangeArr[Math.floor(Math.random() * 5) + 0]
-          reviewObj.skinConcerns = skinConcernsArr[Math.floor(Math.random() * 12) + 0]
+          reviewObj.eyeColor = randomizeArr(eyeColorArr);
+          reviewObj.hairColor = randomizeArr(hairColorArr);
+          reviewObj.skinTone = randomizeArr(skinToneArr);
+          reviewObj.skinType = randomizeArr(skinTypeArr);
+          reviewObj.ageRange = randomizeArr(ageRangeArr);
+          reviewObj.skinConcerns = randomizeArr(skinConcernsArr);
           reviewObj.notHelpfulCount = 0;
           reviewObj.helpfulCount = 0;
           reviewObj.date = faker.date.between('2017-01-01', '2019-02-06');
@@ -167,9 +172,34 @@ var generateData = function () {
 
       }
 
-      Product.create({id, productName, fiveStarReviews, fourStarReviews, threeStarReviews, twoStarReviews, oneStarReviews})
+      let newDocument = {id, productName, fiveStarReviews, fourStarReviews, threeStarReviews, twoStarReviews, oneStarReviews};
+
+      if (i === 0) {
+        fs.writeFile('reviewData.txt', JSON.stringify(newDocument), function(err) {
+          if (err) {
+            console.log('error writing data', err);
+          }
+        });
+      } else {
+        fs.appendFile('reviewData.txt', JSON.stringify(newDocument), function(err) {
+          if (err) {
+            console.log('error appending to file', err);
+          }
+        });
+      }
+
+      // for each iteration of the for loop
+        // if index === 0, use fs.writeFile
+        // otherwise, use fs.appendFile
+
+      // test this at 100, 1000, etc. records
+
+
+      // Product.create({id, productName, fiveStarReviews, fourStarReviews, threeStarReviews, twoStarReviews, oneStarReviews})
 
   }
+
+  console.log('txt file created');
 }
 
 module.exports = generateData
