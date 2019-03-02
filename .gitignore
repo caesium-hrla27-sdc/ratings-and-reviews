@@ -1,2 +1,3 @@
 node_modules
-reviewData.txt
+mongoData.txt
+postgresData.csv

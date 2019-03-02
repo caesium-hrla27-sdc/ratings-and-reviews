@@ -16,12 +16,12 @@ const Product = connection.define('products', {
 );
 
 const Review = connection.define('reviews', {
-  userName: {
-    type: Sequelize.STRING(20),
-    allowNull: false
-  },
   starRating: {
     type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  userName: {
+    type: Sequelize.STRING(20),
     allowNull: false
   },
   eyeColor: {
@@ -44,10 +44,6 @@ const Review = connection.define('reviews', {
     type: Sequelize.STRING(10),
     allowNull: false
   },
-  skinConcerns: {
-    type: Sequelize.STRING(20),
-    allowNull: false
-  }
   notHelpfulCount: {
     type: Sequelize.INTEGER,
     allowNull: false
@@ -69,11 +65,6 @@ const Review = connection.define('reviews', {
   {timestamps: false}
 );
 
-// Review.belongsTo(Product); // should add a productId attribute to Review to hold the primary key value for Product
-
-Product.sync({ force: false });
-Review.sync({ force: false });
-
-module.exports = { Product, Review };
+Review.belongsTo(Product); // should add a productId attribute to Review to hold the primary key value for Product
 
 

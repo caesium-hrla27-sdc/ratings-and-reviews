@@ -20,34 +20,38 @@ const randomizeArr = (arr) => {
 }
 
 const generateProductData = function (id) {
+  let newProduct;
   let productName = faker.lorem.words();
 
-  let newProduct = { id, productName };
+  newProduct = `${id}, ${productName}\n`;
+
+  return newProduct;
   
-  return JSON.stringify(newProduct);
 };
 
-const generateReviewData = function() {
-  let newReview = {};
-
+const generateReviewData = function(id) {
+  let newReview;
   let reviewsNum = Math.ceil(Math.random() * 5) + 6;
 
   for(let i = 0; i < reviewsNum; i++) {
-    newReview.username = faker.name.firstName();
-    newReview.ratingsNumber = Math.floor(Math.random() * 5);
-    newReview.eyeColor = randomizeArr(eyeColorArr);
-    newReview.hairColor = randomizeArr(hairColorArr);
-    newReview.skinTone = randomizeArr(skinToneArr);
-    newReview.skinType = randomizeArr(skinTypeArr);
-    newReview.ageRange = randomizeArr(ageRangeArr);
-    newReview.skinConcerns = randomizeArr(skinConcernsArr);
-    newReview.notHelpfulCount = 0;
-    newReview.helpfulCount = 0;
-    newReview.date = faker.date.between('2017-01-01', '2019-02-06');
-    newReview.review = faker.lorem.paragraph();
+    let username = faker.name.firstName();
+    let starRating = Math.floor(Math.random() * 5);
+    let eyeColor = randomizeArr(eyeColorArr);
+    let hairColor = randomizeArr(hairColorArr);
+    let skinTone = randomizeArr(skinToneArr);
+    let skinType = randomizeArr(skinTypeArr);
+    let ageRange = randomizeArr(ageRangeArr);
+    let skinConcerns = randomizeArr(skinConcernsArr);
+    let notHelpfulCount = 0;
+    let helpfulCount = 0;
+    let date = faker.date.between('2017-01-01', '2019-02-06');
+    let review = faker.lorem.paragraph();
+    let productId = id;
   }
+  
+  newReview = `${username}, ${starRating}, ${eyeColor}, ${hairColor}, ${skinTone}, ${skinType}, ${ageRange}, ${skinConcerns}, ${notHelpfulCount}, ${helpfulCount}, ${date}, ${review}\n`  // will need to add new line at the end
 
-  return JSON.stringify(newReview);
+  return newReview;
 };
 
 
@@ -56,7 +60,6 @@ const generateReviewData = function() {
 
 // generates 100 products
 
-// writer - createWriteStream
 
 // let writableStream = fs.createWriteStream('reviewData.txt');
 
