@@ -155,41 +155,41 @@ var generateData = function (id) {
 
 // writer - createWriteStream
 
-let writableStream = fs.createWriteStream('reviewData.txt');
+// let writableStream = fs.createWriteStream('reviewData.txt');
 
-// writableStream will be "writer" in the function below
-
-
-function writeOneMillionTimes() {
-  let id = 0;
-  let i = 1e7;
-  write();
-  function write() {
-    let ok = true;
-    do {
-      id++;
-      i--;
-      if (i === 0) {
-        // once the loop is finished, this will write one file to disk
-        writableStream.write(generateData(id));
-        console.log('Finished!!!!!!!!!');
-      } else {
-        // .write adds onto an existing file
-        ok = writableStream.write(generateData(id));
-      }
-    } while (i > 0 && ok);
-    if (i > 0) {
-      // once the drain event is complete, continue to write
-      writableStream.once('drain', write);
-    }
-  }
-}
-
-// writeOneMillionTimes();
+// // writableStream will be "writer" in the function below
 
 
+// // function writeOneMillionTimes() {
+// //   let id = 0;
+// //   let i = 1e7;
+// //   write();
+// //   function write() {
+// //     let ok = true;
+// //     do {
+// //       id++;
+// //       i--;
+// //       if (i === 0) {
+// //         // once the loop is finished, this will write one file to disk
+// //         writableStream.write(generateData(id));
+// //         console.log('Finished!!!!!!!!!');
+// //       } else {
+// //         // .write adds onto an existing file
+// //         ok = writableStream.write(generateData(id));
+// //       }
+// //     } while (i > 0 && ok);
+// //     if (i > 0) {
+// //       // once the drain event is complete, continue to write
+// //       writableStream.once('drain', write);
+// //     }
+// //   }
+// // }
 
-module.exports = generateData
+// // writeOneMillionTimes();
+
+
+
+// module.exports = generateData
 
 // 7 seconds for 100,000 records
 // 2 minutes, 57 seconds - 1 million records

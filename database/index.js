@@ -31,31 +31,3 @@ var productSchema = new mongoose.Schema({
 var Product = mongoose.model('Product', productSchema);
 
 module.exports = { Review, Product };
-
-
-// var mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/reviews');
-
-// var reviewSchema = new mongoose.Schema({
-//     username: String,
-//     ratings: Number, 
-//     eyeColor: String, 
-//     hairColor: String,
-//     skinTone: String,
-//     skinType: String,
-//     ageRange: String,
-//     skinConcerns: String,
-//     notHelpful: Number,
-//     helpful: Number,
-//     date: Date,
-//     review: String
-// })
-
-// var Review = mongoose.model('Review', reviewSchema);
-
-
-
-
-
-
-// module.exports = Review;
