@@ -10,7 +10,9 @@
   "scripts": {
     "build": "webpack -d --watch",
     "start": "nodemon server/index.js",
-    "seed": "mongoimport --db reviews --collection products --file reviewData.txt"
+    "seedMongo": "mongoimport --db reviews --collection products --file reviewData.txt",
+    "seedProductsPostgres": "psql -c 'COPY products FROM './productData.csv' delimiter ',' csv;",
+    "seedReviewsPostgres": "psql -c 'COPY reviews FROM './reviewData.csv' delimiter ',' csv;"
   },
   "dependencies": {
     "@babel/core": "^7.2.2",

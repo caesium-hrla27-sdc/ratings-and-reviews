@@ -1,5 +1,5 @@
 const faker = require('faker');
-const { Product, Review } = require('../postgresDB/models.js');
+// const { Product, Review } = require('../postgresDB/models.js');
 var fs = require('fs');
 
 var eyeColorArr = ['Blue', 'Brown', 'Green', 'Gray', 'Hazel'];
@@ -30,70 +30,78 @@ const generateProductData = function (id) {
 };
 
 const generateReviewData = function(id) {
-  let newReview;
   let reviewsNum = Math.ceil(Math.random() * 5) + 6;
+  let newReviews = '';
+
+  let username;
+  let starRating;
+  let eyeColor;
+  let hairColor;
+  let skinTone;
+  let skinType;
+  let ageRange;
+  let skinConcerns;
+  let notHelpfulCount;
+  let date;
+  let review;
+  let productId = id;
 
   for(let i = 0; i < reviewsNum; i++) {
-    let username = faker.name.firstName();
-    let starRating = Math.floor(Math.random() * 5);
-    let eyeColor = randomizeArr(eyeColorArr);
-    let hairColor = randomizeArr(hairColorArr);
-    let skinTone = randomizeArr(skinToneArr);
-    let skinType = randomizeArr(skinTypeArr);
-    let ageRange = randomizeArr(ageRangeArr);
-    let skinConcerns = randomizeArr(skinConcernsArr);
-    let notHelpfulCount = 0;
-    let helpfulCount = 0;
-    let date = faker.date.between('2017-01-01', '2019-02-06');
-    let review = faker.lorem.paragraph();
-    let productId = id;
+    username = faker.name.firstName();
+    starRating = Math.floor(Math.random() * 5);
+    eyeColor = randomizeArr(eyeColorArr);
+    hairColor = randomizeArr(hairColorArr);
+    skinTone = randomizeArr(skinToneArr);
+    skinType = randomizeArr(skinTypeArr);
+    ageRange = randomizeArr(ageRangeArr);
+    skinConcerns = randomizeArr(skinConcernsArr);
+    notHelpfulCount = 0;
+    helpfulCount = 0;
+    date = faker.date.between('2017-01-01', '2019-02-06');
+    review = faker.lorem.paragraph();
+
+    newReviews += `${username}, ${starRating}, ${eyeColor}, ${hairColor}, ${skinTone}, ${skinType}, ${ageRange}, ${skinConcerns}, ${notHelpfulCount}, ${helpfulCount}, ${date}, ${review}, ${productId}\n`;
   }
-  
-  newReview = `${username}, ${starRating}, ${eyeColor}, ${hairColor}, ${skinTone}, ${skinType}, ${ageRange}, ${skinConcerns}, ${notHelpfulCount}, ${helpfulCount}, ${date}, ${review}\n`  // will need to add new line at the end
-
-  return newReview;
+  return newReviews;
 };
-
 
 
 // CREATE THE STREAM ----
 
-// generates 100 products
+let writableStreamProducts = fs.createWriteStream('productData.csv');
+let writableStreamReviews = fs.createWriteStream('reviewData.csv');
 
+// writableStream will be "writer" in the function below
 
-// let writableStream = fs.createWriteStream('reviewData.txt');
+function writeTenMillionTimes() {
+  let id = 0;
+  let i = 1e7;
+  write();
+  function write() {
+    let ok = true;
+    do {
+      id++;
+      i--;
+      if (i === 0) {
+        // once the loop is finished, this will write one file to disk
+        writableStreamProducts.write(generateProductData(id));
+        writableStreamReviews.write(generateReviewData(id));
+        console.log('Finished!!!!!!!!!');
+      } else {
+        // .write adds onto an existing file
+        ok = writableStreamProducts.write(generateProductData(id));
+        ok = writableStreamReviews.write(generateReviewData(id));
+      }
+    } while (i > 0 && ok);
+    if (i > 0) {
+      // once the drain event is complete, continue to write
+      writableStreamProducts.once('drain', write);
+      writableStreamReviews.once('drain', write);
+    }
+  }
+}
 
-// // writableStream will be "writer" in the function below
-
-
-// // function writeTenMillionTimes() {
-// //   let id = 0;
-// //   let i = 1e7;
-// //   write();
-// //   function write() {
-// //     let ok = true;
-// //     do {
-// //       id++;
-// //       i--;
-// //       if (i === 0) {
-// //         // once the loop is finished, this will write one file to disk
-// //         writableStream.write(generateData(id));
-// //         console.log('Finished!!!!!!!!!');
-// //       } else {
-// //         // .write adds onto an existing file
-// //         ok = writableStream.write(generateData(id));
-// //       }
-// //     } while (i > 0 && ok);
-// //     if (i > 0) {
-// //       // once the drain event is complete, continue to write
-// //       writableStream.once('drain', write);
-// //     }
-// //   }
-// // }
-
-// // writeTenMillionTimes();
-
-
+writeTenMillionTimes();
 
 // module.exports = generateData
 
