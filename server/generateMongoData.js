@@ -20,6 +20,7 @@ const randomizeArr = (arr) => {
 }
 
 var generateData = function (id) {
+  let newProduct = '';
   let productName = faker.lorem.words();
 
   let fiveStarReviews =[];
@@ -144,7 +145,7 @@ var generateData = function (id) {
 
   }
 
-  let newDocument = { id, productName, fiveStarReviews, fourStarReviews, threeStarReviews, twoStarReviews, oneStarReviews };
+  let newProduct += `${productName}, ${fiveStarReviews}, ${fourStarReviews}, ${threeStarReviews}, twoStarReviews, oneStarReviews `;
   
   return JSON.stringify(newDocument);
 }
