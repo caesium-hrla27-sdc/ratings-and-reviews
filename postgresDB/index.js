@@ -1,7 +1,6 @@
-const mysql = require('mysql');
 const Sequelize = require('sequelize');
 
-const connection = new Sequelize('ratingsAndReviews', 'root', 'password', {
+const connection = new Sequelize('ratingsandreviews', '', '', {
   host: 'localhost',
   dialect: 'postgres'
 });

@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const connection = require('connection');
+const connection = require('./index.js');
 
 const Product = connection.define('products', {
   id: {
@@ -16,32 +16,36 @@ const Product = connection.define('products', {
 );
 
 const Review = connection.define('reviews', {
-  starRating: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
   userName: {
     type: Sequelize.STRING(20),
     allowNull: false
   },
+  starRating: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
   eyeColor: {
-    type: Sequelize.STRING(10),
+    type: Sequelize.STRING(30),
     allowNull: false
   },
   hairColor: {
-    type: Sequelize.STRING(10),
+    type: Sequelize.STRING(30),
     allowNull: false
   },
   skinTone: {
-    type: Sequelize.STRING(10),
+    type: Sequelize.STRING(30),
     allowNull: false
   },
   skinType: {
-    type: Sequelize.STRING(10),
+    type: Sequelize.STRING(30),
     allowNull: false
   },
   ageRange: {
-    type: Sequelize.STRING(10),
+    type: Sequelize.STRING(30),
+    allowNull: false
+  },
+  skinConcerns: {
+    type: Sequelize.STRING(30),
     allowNull: false
   },
   notHelpfulCount: {
@@ -53,13 +57,17 @@ const Review = connection.define('reviews', {
     allowNull: false
   },
   date: {
-    type: Sequelize.STRING(30),
+    type: Sequelize.TEXT,
     allowNull: false
   },
   review: {
     type: Sequelize.TEXT,
     allowNull: false
   },
+  productId: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  }
 
 },
   {timestamps: false}

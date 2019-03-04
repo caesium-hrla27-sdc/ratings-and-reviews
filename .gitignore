@@ -1,2 +1,4 @@
 node_modules
-reviewData.txt
+mongoData.txt
+productData.csv
+reviewData.csv
