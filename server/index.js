@@ -28,6 +28,8 @@ app.use(parser.urlencoded({ extended: true }));
 //   });
 // };
 
+// TESTING MONGO QUERIES
+
 // const getRatings = (req, res) => {
 //   let {id} = req.params;
 
@@ -42,7 +44,29 @@ app.use(parser.urlencoded({ extended: true }));
 
 // };
 
-// app.get('/ratings/:id', getRatings);
+// TESTING POSTGRES QUERIES
+
+const getRatings = (req, res) => {
+  let {id} = req.params;
+
+  console.log('IN GET-----------');
+  console.time('testGet');
+
+  Review.findAll({
+    where: {
+      "productId": id
+    }
+  })
+  .then(reviews => {
+    console.timeEnd('testGet');
+    res.status(200).json(reviews);
+  })
+  .catch(err => {
+    console.log('err getting reviews', err)
+  });
+}
+
+app.get('/ratings/:id', getRatings);
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
