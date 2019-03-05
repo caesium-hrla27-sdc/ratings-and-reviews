@@ -101,7 +101,7 @@ function writeTenMillionTimes() {
   }
 }
 
-writeTenMillionTimes();
+// writeTenMillionTimes();
 
 // module.exports = generateData
 
