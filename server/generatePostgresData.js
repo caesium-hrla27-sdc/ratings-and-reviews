@@ -1,5 +1,5 @@
 const faker = require('faker');
-// const { Product, Review } = require('../postgresDB/models.js');
+// const { Review } = require('../postgresDB/models.js');
 var fs = require('fs');
 
 var eyeColorArr = ['Blue', 'Brown', 'Green', 'Gray', 'Hazel'];
