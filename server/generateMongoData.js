@@ -1,5 +1,5 @@
 var faker = require('faker');
-var { Review, Product } = require('../database');
+// var { Product } = require('../database');
 var fs = require('fs');
 
 var eyeColorArr = ['Blue', 'Brown', 'Green', 'Gray', 'Hazel'];
@@ -19,15 +19,15 @@ const randomizeArr = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-var generateData = function (id) {
+var generateData = function () {
   let newProduct = '';
   let productName = faker.lorem.words();
 
-  let fiveStarReviews =[];
-  let fourStarReviews =[];
-  let threeStarReviews =[];
-  let twoStarReviews =[];
-  let oneStarReviews =[];
+  let fiveStarReviews = [];
+  let fourStarReviews = [];
+  let threeStarReviews = [];
+  let twoStarReviews = [];
+  let oneStarReviews = [];
 
   // FIVE STAR REVIEWS
 
@@ -145,9 +145,9 @@ var generateData = function (id) {
 
   }
 
-  let newProduct += `${productName}, ${fiveStarReviews}, ${fourStarReviews}, ${threeStarReviews}, twoStarReviews, oneStarReviews `;
+  newProduct += `${productName}, ${JSON.stringify(fiveStarReviews)}, ${JSON.stringify(fourStarReviews)}, ${JSON.stringify(threeStarReviews)}, ${JSON.stringify(twoStarReviews)}, ${JSON.stringify(oneStarReviews)} \n`;
   
-  return JSON.stringify(newDocument);
+  return newProduct;
 }
 
 // CREATE THE STREAM ----
@@ -156,37 +156,37 @@ var generateData = function (id) {
 
 // writer - createWriteStream
 
-// let writableStream = fs.createWriteStream('reviewData.txt');
+let writableStream = fs.createWriteStream('productData.csv');
 
 // // writableStream will be "writer" in the function below
 
 
-// // function writeOneMillionTimes() {
-// //   let id = 0;
-// //   let i = 1e7;
-// //   write();
-// //   function write() {
-// //     let ok = true;
-// //     do {
-// //       id++;
-// //       i--;
-// //       if (i === 0) {
-// //         // once the loop is finished, this will write one file to disk
-// //         writableStream.write(generateData(id));
-// //         console.log('Finished!!!!!!!!!');
-// //       } else {
-// //         // .write adds onto an existing file
-// //         ok = writableStream.write(generateData(id));
-// //       }
-// //     } while (i > 0 && ok);
-// //     if (i > 0) {
-// //       // once the drain event is complete, continue to write
-// //       writableStream.once('drain', write);
-// //     }
-// //   }
-// // }
+function writeTenMillionTimes() {
+  // let id = 0;
+  let i = 3;
+  write();
+  function write() {
+    let ok = true;
+    do {
+      // id++;
+      i--;
+      if (i === 0) {
+        // once the loop is finished, this will write one file to disk
+        writableStream.write(generateData());
+        console.log('Finished!!!!!!!!!');
+      } else {
+        // .write adds onto an existing file
+        ok = writableStream.write(generateData());
+      }
+    } while (i > 0 && ok);
+    if (i > 0) {
+      // once the drain event is complete, continue to write
+      writableStream.once('drain', write);
+    }
+  }
+}
 
-// // writeOneMillionTimes();
+writeTenMillionTimes();
 
 
 

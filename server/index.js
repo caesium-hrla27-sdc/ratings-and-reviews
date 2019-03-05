@@ -3,7 +3,7 @@ const parser = require('body-parser');
 const path = require('path');
 const morgan = require('morgan');
 const PORT = 3003;
-const { Review, Product } = require('../postgresDB/models.js');
+const { Product } = require('../postgresDB/models.js');
 // const generateData = require('./generateData');
 
 
@@ -52,7 +52,7 @@ const getRatings = (req, res) => {
   console.log('IN GET-----------');
   console.time('testGet');
 
-  Review.findAll({
+  Product.findAll({
     where: {
       "productId": id
     }
