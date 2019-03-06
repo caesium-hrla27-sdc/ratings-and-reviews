@@ -1,5 +1,5 @@
 const faker = require('faker');
-// const { Review } = require('../postgresDB/models.js');
+const { Review } = require('../postgresDB/models.js');
 var fs = require('fs');
 
 var eyeColorArr = ['Blue', 'Brown', 'Green', 'Gray', 'Hazel'];
@@ -19,16 +19,6 @@ const randomizeArr = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-const generateProductData = function (id) {
-  let newProduct;
-  let productName = faker.lorem.words();
-
-  newProduct = `${id}, ${productName}\n`;
-
-  return newProduct;
-  
-};
-
 const generateReviewData = function(id) {
   let reviewsNum = Math.ceil(Math.random() * 5) + 6;
   let newReviews = '';
@@ -44,6 +34,7 @@ const generateReviewData = function(id) {
   let notHelpfulCount;
   let date;
   let review;
+  let productName = faker.lorem.words();
   let productId = id;
 
   for(let i = 0; i < reviewsNum; i++) {
@@ -60,7 +51,7 @@ const generateReviewData = function(id) {
     date = faker.date.between('2017-01-01', '2019-02-06');
     review = faker.lorem.paragraph();
 
-    newReviews += `${username}, ${starRating}, ${eyeColor}, ${hairColor}, ${skinTone}, ${skinType}, ${ageRange}, ${skinConcerns}, ${notHelpfulCount}, ${helpfulCount}, ${date}, ${review}, ${productId}\n`;
+    newReviews += `${username}, ${starRating}, ${eyeColor}, ${hairColor}, ${skinTone}, ${skinType}, ${ageRange}, ${skinConcerns}, ${notHelpfulCount}, ${helpfulCount}, ${date}, ${review}, ${productName}, ${productId}\n`;
   }
   return newReviews;
 };
@@ -68,7 +59,6 @@ const generateReviewData = function(id) {
 
 // CREATE THE STREAM ----
 
-let writableStreamProducts = fs.createWriteStream('productData.csv');
 let writableStreamReviews = fs.createWriteStream('reviewData.csv');
 
 // writableStream will be "writer" in the function below
@@ -84,24 +74,21 @@ function writeTenMillionTimes() {
       i--;
       if (i === 0) {
         // once the loop is finished, this will write one file to disk
-        writableStreamProducts.write(generateProductData(id));
         writableStreamReviews.write(generateReviewData(id));
         console.log('Finished!!!!!!!!!');
       } else {
         // .write adds onto an existing file
-        ok = writableStreamProducts.write(generateProductData(id));
         ok = writableStreamReviews.write(generateReviewData(id));
       }
     } while (i > 0 && ok);
     if (i > 0) {
       // once the drain event is complete, continue to write
-      writableStreamProducts.once('drain', write);
       writableStreamReviews.once('drain', write);
     }
   }
 }
 
-// writeTenMillionTimes();
+writeTenMillionTimes();
 
 // module.exports = generateData
 
