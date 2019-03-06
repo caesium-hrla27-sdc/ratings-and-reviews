@@ -3,7 +3,7 @@ const parser = require('body-parser');
 const path = require('path');
 const morgan = require('morgan');
 const PORT = 3003;
-const { Product } = require('../postgresDB/models.js');
+const { Product } = require('../mongoDB/index.js');
 // const generateData = require('./generateData');
 
 
@@ -30,41 +30,46 @@ app.use(parser.urlencoded({ extended: true }));
 
 // TESTING MONGO QUERIES
 
-// const getRatings = (req, res) => {
-//   let {id} = req.params;
-
-//   console.log('IN GET---------');
-//   console.time('testBeg');
-//   // let id = 10;
-//   Product.find({id: id})
-//     .then(result => {
-//       console.timeEnd('testBeg');
-//       res.status(200).json(result);
-//     })
-
-// };
-
-// TESTING POSTGRES QUERIES
-
 const getRatings = (req, res) => {
   let {id} = req.params;
 
-  console.log('IN GET-----------');
+  console.log('IN GET---------');
   console.time('testGet');
 
-  Product.findAll({
-    where: {
-      "productId": id
-    }
-  })
-  .then(reviews => {
-    console.timeEnd('testGet');
-    res.status(200).json(reviews);
-  })
-  .catch(err => {
-    console.log('err getting reviews', err)
-  });
-}
+  Product.find({id: id})
+    .then(result => {
+      console.timeEnd('testGet');
+      res.status(200).send(result);
+    })
+    .catch(err => {
+      res.status(400).send('err getting reviews', err);
+    });
+
+};
+
+// TESTING POSTGRES QUERIES
+
+// const getRatings = (req, res) => {
+//   let {id} = req.params;
+
+//   console.log('IN GET-----------');
+//   console.time('testGet');
+
+
+  // findAll({
+  //   where: {
+  //     "productId": id
+  //   }
+  // })
+//   connection.query('SELECT * FROM reviews WHERE "productId" = ' + id)
+//   .then(reviews => {
+//     console.timeEnd('testGet');
+//     res.status(200).send(reviews);
+//   })
+//   .catch(err => {
+//     res.status(404).send('err getting reviews');
+//   });
+// }
 
 app.get('/ratings/:id', getRatings);
 

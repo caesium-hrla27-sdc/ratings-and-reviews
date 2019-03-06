@@ -163,7 +163,7 @@ let writableStream = fs.createWriteStream('productData.csv');
 
 function writeTenMillionTimes() {
   // let id = 0;
-  let i = 3;
+  let i = 1;
   write();
   function write() {
     let ok = true;
