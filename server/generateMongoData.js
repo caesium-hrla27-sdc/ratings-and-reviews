@@ -19,136 +19,80 @@ const randomizeArr = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-const generateReview
+const generateReviews = (ratingsNumber) => {
+  let reviews = [];
+  let loopLength = Math.ceil(Math.random() * 2);
 
-const generateData = function () {
+  for(let i = 0; i < loopLength; i++) {
+    let reviewObj = {};
+    reviewObj.username = faker.name.firstName();
+    reviewObj.ratingsNumber = ratingsNumber;
+    reviewObj.eyeColor = randomizeArr(eyeColorArr);
+    reviewObj.hairColor = randomizeArr(hairColorArr);
+    reviewObj.skinTone = randomizeArr(skinToneArr);
+    reviewObj.skinType = randomizeArr(skinTypeArr);
+    reviewObj.ageRange = randomizeArr(ageRangeArr);
+    reviewObj.skinConcerns = randomizeArr(skinConcernsArr);
+    reviewObj.notHelpfulCount = 0;
+    reviewObj.helpfulCount = 0;
+    reviewObj.date = faker.date.between('2017-01-01', '2019-02-06');
+    reviewObj.review = faker.lorem.paragraph();
+
+    reviews.push(reviewObj);
+  }
+  return reviews;
+}
+
+const generateCSVData = function () {
   let newProduct = '';
   let productName = faker.lorem.words();
 
-  let fiveStarReviews = [];
-  let fourStarReviews = [];
-  let threeStarReviews = [];
-  let twoStarReviews = [];
-  let oneStarReviews = [];
+  let fiveStarReviews;
+  let fourStarReviews;
+  let threeStarReviews;
+  let twoStarReviews;
+  let oneStarReviews;
 
   // FIVE STAR REVIEWS
+  fiveStarReviews = generateReviews(5);
 
-  let loopLength = Math.ceil(Math.random() * 2)
-
-  for(let i = 0; i < loopLength; i++) {
-    let reviewObj = {};
-    reviewObj.username = faker.name.firstName();
-    reviewObj.ratingsNumber = 5
-    reviewObj.eyeColor = randomizeArr(eyeColorArr);
-    reviewObj.hairColor = randomizeArr(hairColorArr);
-    reviewObj.skinTone = randomizeArr(skinToneArr);
-    reviewObj.skinType = randomizeArr(skinTypeArr);
-    reviewObj.ageRange = randomizeArr(ageRangeArr);
-    reviewObj.skinConcerns = randomizeArr(skinConcernsArr);
-    reviewObj.notHelpfulCount = 0;
-    reviewObj.helpfulCount = 0;
-    reviewObj.date = faker.date.between('2017-01-01', '2019-02-06');
-    reviewObj.review = faker.lorem.paragraph();
-
-
-    fiveStarReviews.push(reviewObj);
-
-  }
-
-      // FOUR STAR REVIEWS
-
-  loopLength = Math.ceil(Math.random() * 2)
-
-  for(let i = 0; i < loopLength; i++) {
-    let reviewObj = {};
-    reviewObj.username = faker.name.firstName();
-    reviewObj.ratingsNumber = 4
-    reviewObj.eyeColor = randomizeArr(eyeColorArr);
-    reviewObj.hairColor = randomizeArr(hairColorArr);
-    reviewObj.skinTone = randomizeArr(skinToneArr);
-    reviewObj.skinType = randomizeArr(skinTypeArr);
-    reviewObj.ageRange = randomizeArr(ageRangeArr);
-    reviewObj.skinConcerns = randomizeArr(skinConcernsArr);
-    reviewObj.notHelpfulCount = 0;
-    reviewObj.helpfulCount = 0;
-    reviewObj.date = faker.date.between('2017-01-01', '2019-02-06');
-    reviewObj.review = faker.lorem.paragraph();
-
-    fourStarReviews.push(reviewObj);
-
-  }
+  // FOUR STAR REVIEWS
+  fourStarReviews = generateReviews(4);
 
   // THREE STAR REVIEWS
-
-  loopLength = Math.ceil(Math.random() * 2)
-
-  for(let i = 0; i < loopLength; i++) {
-    let reviewObj = {};
-    reviewObj.username = faker.name.firstName();
-    reviewObj.ratingsNumber = 3
-    reviewObj.eyeColor = randomizeArr(eyeColorArr);
-    reviewObj.hairColor = randomizeArr(hairColorArr);
-    reviewObj.skinTone = randomizeArr(skinToneArr);
-    reviewObj.skinType = randomizeArr(skinTypeArr);
-    reviewObj.ageRange = randomizeArr(ageRangeArr);
-    reviewObj.skinConcerns = randomizeArr(skinConcernsArr);
-    reviewObj.notHelpfulCount = 0;
-    reviewObj.helpfulCount = 0;
-    reviewObj.date = faker.date.between('2017-01-01', '2019-02-06');
-    reviewObj.review = faker.lorem.paragraph();
-
-    threeStarReviews.push(reviewObj);
-
-  }
+  threeStarReviews = generateReviews(3);
 
   // TWO STAR REVIEWS
-
-  loopLength = Math.ceil(Math.random() * 2)
-
-  for(let i = 0; i < loopLength; i++) {
-    let reviewObj = {};
-    reviewObj.username = faker.name.firstName();
-    reviewObj.ratingsNumber = 2
-    reviewObj.eyeColor = randomizeArr(eyeColorArr);
-    reviewObj.hairColor = randomizeArr(hairColorArr);
-    reviewObj.skinTone = randomizeArr(skinToneArr);
-    reviewObj.skinType = randomizeArr(skinTypeArr);
-    reviewObj.ageRange = randomizeArr(ageRangeArr);
-    reviewObj.skinConcerns = randomizeArr(skinConcernsArr);
-    reviewObj.notHelpfulCount = 0;
-    reviewObj.helpfulCount = 0;
-    reviewObj.date = faker.date.between('2017-01-01', '2019-02-06');
-    reviewObj.review = faker.lorem.paragraph();
-
-    twoStarReviews.push(reviewObj);
-
-  }
+  twoStarReviews = generateReviews(2);
 
   // ONE STAR REVIEWS
-
-  loopLength = Math.ceil(Math.random() * 2)
-
-  for(let i = 0; i < loopLength; i++) {
-    let reviewObj = {};
-    reviewObj.username = faker.name.firstName();
-    reviewObj.ratingsNumber = 1
-    reviewObj.eyeColor = randomizeArr(eyeColorArr);
-    reviewObj.hairColor = randomizeArr(hairColorArr);
-    reviewObj.skinTone = randomizeArr(skinToneArr);
-    reviewObj.skinType = randomizeArr(skinTypeArr);
-    reviewObj.ageRange = randomizeArr(ageRangeArr);
-    reviewObj.skinConcerns = randomizeArr(skinConcernsArr);
-    reviewObj.notHelpfulCount = 0;
-    reviewObj.helpfulCount = 0;
-    reviewObj.date = faker.date.between('2017-01-01', '2019-02-06');
-    reviewObj.review = faker.lorem.paragraph();
-
-    oneStarReviews.push(reviewObj);
-
-  }
+  oneStarReviews = generateReviews(1);
 
   newProduct += `${productName}, ${JSON.stringify(fiveStarReviews)}, ${JSON.stringify(fourStarReviews)}, ${JSON.stringify(threeStarReviews)}, ${JSON.stringify(twoStarReviews)}, ${JSON.stringify(oneStarReviews)} \n`;
   
+  return newProduct;
+}
+
+const generateProductData = () => {
+  let newProduct = {};
+  
+  newProduct.productName = faker.lorem.words();
+
+  // FIVE STAR REVIEWS
+  newProduct.fiveStarReviews = generateReviews(5);
+
+  // FOUR STAR REVIEWS
+  newProduct.fourStarReviews = generateReviews(4);
+
+  // THREE STAR REVIEWS
+  newProduct.threeStarReviews = generateReviews(3);
+
+  // TWO STAR REVIEWS
+  newProduct.twoStarReviews = generateReviews(2);
+
+  // ONE STAR REVIEWS
+  newProduct.oneStarReviews = generateReviews(1);
+
   return newProduct;
 }
 
@@ -174,11 +118,11 @@ function writeTenMillionTimes() {
       i--;
       if (i === 0) {
         // once the loop is finished, this will write one file to disk
-        writableStream.write(generateData());
+        writableStream.write(generateCSVData());
         console.log('Finished!!!!!!!!!');
       } else {
         // .write adds onto an existing file
-        ok = writableStream.write(generateData());
+        ok = writableStream.write(generateCSVData());
       }
     } while (i > 0 && ok);
     if (i > 0) {
@@ -188,11 +132,9 @@ function writeTenMillionTimes() {
   }
 }
 
-writeTenMillionTimes();
+// writeTenMillionTimes();
 
-
-
-// module.exports = generateData
+module.exports = generateProductData;
 
 // 7 seconds for 100,000 records
 // 2 minutes, 57 seconds - 1 million records

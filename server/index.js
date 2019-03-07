@@ -1,10 +1,10 @@
 const express = require('express');
 const parser = require('body-parser');
 const path = require('path');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const PORT = 3003;
 const { Product } = require('../mongoDB/index.js');
-// const generateData = require('./generateData');
+const generateProductData = require('./generateMongoData');
 
 
 const app = express();
@@ -12,6 +12,8 @@ const app = express();
 // app.use(morgan('dev'));
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
+
+let id = 10000000;
 
 // This function will retrieve
 
@@ -28,7 +30,9 @@ app.use(parser.urlencoded({ extended: true }));
 //   });
 // };
 
-// TESTING MONGO QUERIES
+// MONGO QUERIES
+
+// GET REQUEST - GET ALL REVIEWS FOR ONE PRODUCT
 
 const getRatings = (req, res) => {
   let {id} = req.params;
@@ -47,7 +51,28 @@ const getRatings = (req, res) => {
 
 };
 
-// TESTING POSTGRES QUERIES
+// POST REQUEST - POST ONE NEW PRODUCT TO THE DATABASE
+
+const createNewProduct = (req, res) => {
+  console.log('IN POST-----------');
+  console.time('testPost');
+
+  id++;
+
+  let addedProduct = generateProductData();
+  addedProduct.id = id;
+
+  Product.create(addedProduct)
+  .then(result => {
+    console.timeEnd('testPost');
+    res.status(201).send(result);
+  })
+  .catch(err => {
+    res.status(404).send('error creating new product', err);
+  });
+}
+
+// POSTGRES QUERIES
 
 // const getRatings = (req, res) => {
 //   let {id} = req.params;
@@ -72,6 +97,8 @@ const getRatings = (req, res) => {
 // }
 
 app.get('/ratings/:id', getRatings);
+
+app.post('/ratings', createNewProduct);
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
