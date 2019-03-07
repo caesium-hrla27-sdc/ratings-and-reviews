@@ -19,7 +19,9 @@ const randomizeArr = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-var generateData = function () {
+const generateReview
+
+const generateData = function () {
   let newProduct = '';
   let productName = faker.lorem.words();
 

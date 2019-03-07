@@ -71,9 +71,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/ratings/5')
+    axios.get('/ratings/9000006')
     .then(results => {
       let data =  results.data[0];
+      console.log(results);
       console.log('this is fiveStarReviews', data.fiveStarReviews);
       console.log('this is fourStarReviews', data.fourStarReviews);
       console.log('this is threeStarReviews', data.threeStarReviews);
