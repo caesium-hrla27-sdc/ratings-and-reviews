@@ -4,7 +4,7 @@ const path = require('path');
 // const morgan = require('morgan');
 const PORT = 3003;
 const { Product } = require('../mongoDB/index.js');
-const generateProductData = require('./generateMongoData');
+// const generateProductData = require('./generateMongoData');
 
 
 const app = express();
@@ -65,11 +65,47 @@ const createNewProduct = (req, res) => {
   Product.create(addedProduct)
   .then(result => {
     console.timeEnd('testPost');
-    res.status(201).send(result);
+    res.status(201).end();
   })
   .catch(err => {
     res.status(404).send('error creating new product', err);
   });
+}
+
+// DELETE REQUEST - DELETE ONE PRODUCT FROM THE DATABASE
+
+const deleteProduct = (req, res) => {
+  console.log('IN DELETE-----------');
+  console.time('testDelete');
+
+  let {id} = req.query;
+
+  Product.deleteOne({ id: id })
+  .then(() => {
+    console.timeEnd('testDelete');
+    res.status(202).end();
+  })
+  .catch(err => {
+    res.status(404).send('Error deleting item', err);
+  });
+}
+
+const updateProductName = (req, res) => {
+  console.log('IN UPDATE-----------------');
+  console.time('testUpdate');
+
+  let { id } = req.query;
+  let { productName } = req.body;
+
+  Product.updateOne({ id: id }, { productName: productName } )
+  .then(() => {
+    console.timeEnd('testUpdate');
+    res.status(201).end();
+  })
+  .catch(err => {
+    res.status(404).send('Error updating item', err)
+  });
+
 }
 
 // POSTGRES QUERIES
@@ -99,6 +135,10 @@ const createNewProduct = (req, res) => {
 app.get('/ratings/:id', getRatings);
 
 app.post('/ratings', createNewProduct);
+
+app.delete('/ratings', deleteProduct);
+
+app.patch('/ratings', updateProductName);
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
