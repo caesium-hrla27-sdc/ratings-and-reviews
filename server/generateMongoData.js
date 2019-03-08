@@ -36,41 +36,34 @@ const generateReviews = (ratingsNumber) => {
     reviewObj.notHelpfulCount = 0;
     reviewObj.helpfulCount = 0;
     reviewObj.date = faker.date.between('2017-01-01', '2019-02-06');
-    reviewObj.review = faker.lorem.paragraph();
+    reviewObj.review = faker.lorem.sentence();
 
     reviews.push(reviewObj);
   }
   return reviews;
 }
 
-const generateCSVData = function () {
-  let newProduct = '';
-  let productName = faker.lorem.words();
-
-  let fiveStarReviews;
-  let fourStarReviews;
-  let threeStarReviews;
-  let twoStarReviews;
-  let oneStarReviews;
+const generateMongoData = function (id) {
+  let newProduct = {};
+  newProduct.id = id;
+  newProduct.productName = faker.lorem.words();
 
   // FIVE STAR REVIEWS
-  fiveStarReviews = generateReviews(5);
+  newProduct.fiveStarReviews = generateReviews(5);
 
   // FOUR STAR REVIEWS
-  fourStarReviews = generateReviews(4);
+  newProduct.fourStarReviews = generateReviews(4);
 
   // THREE STAR REVIEWS
-  threeStarReviews = generateReviews(3);
+  newProduct.threeStarReviews = generateReviews(3);
 
   // TWO STAR REVIEWS
-  twoStarReviews = generateReviews(2);
+  newProduct.twoStarReviews = generateReviews(2);
 
   // ONE STAR REVIEWS
-  oneStarReviews = generateReviews(1);
-
-  newProduct += `${productName}, ${JSON.stringify(fiveStarReviews)}, ${JSON.stringify(fourStarReviews)}, ${JSON.stringify(threeStarReviews)}, ${JSON.stringify(twoStarReviews)}, ${JSON.stringify(oneStarReviews)} \n`;
+  newProduct.oneStarReviews = generateReviews(1);
   
-  return newProduct;
+  return JSON.stringify(newProduct) + '\n';
 }
 
 const generateProductData = () => {
@@ -102,27 +95,27 @@ const generateProductData = () => {
 
 // writer - createWriteStream
 
-let writableStream = fs.createWriteStream('productData.csv');
+let writableStream = fs.createWriteStream('productMongoData.json');
 
 // // writableStream will be "writer" in the function below
 
 
 function writeTenMillionTimes() {
-  // let id = 0;
-  let i = 1;
+  let id = 0;
+  let i = 10000000;
   write();
   function write() {
     let ok = true;
     do {
-      // id++;
+      id++;
       i--;
       if (i === 0) {
         // once the loop is finished, this will write one file to disk
-        writableStream.write(generateCSVData());
+        writableStream.write(generateMongoData(id));
         console.log('Finished!!!!!!!!!');
       } else {
         // .write adds onto an existing file
-        ok = writableStream.write(generateCSVData());
+        ok = writableStream.write(generateMongoData(id));
       }
     } while (i > 0 && ok);
     if (i > 0) {
@@ -132,17 +125,9 @@ function writeTenMillionTimes() {
   }
 }
 
-// writeTenMillionTimes();
+writeTenMillionTimes();
 
-module.exports = generateProductData;
-
-// 7 seconds for 100,000 records
-// 2 minutes, 57 seconds - 1 million records
-// 29 minutes, 25 seconds - 10 million records - 33G
-
-
-
-
+// module.exports = generateProductData;
 
 
  
