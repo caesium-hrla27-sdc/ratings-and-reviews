@@ -4,7 +4,7 @@ const path = require('path');
 // const morgan = require('morgan');
 const PORT = 3003;
 const { Product } = require('../mongoDB/index.js');
-// const generateProductData = require('./generateMongoData');
+const generateProductData = require('./generateMongoData');
 
 
 const app = express();
@@ -13,9 +13,8 @@ const app = express();
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 
-let id = 10000000;
 
-// This function will retrieve
+// This function will seed data if none exists
 
 // Product.find().then(result => {
 //   if (result.length === 0) {
@@ -23,26 +22,17 @@ let id = 10000000;
 //   }
 // });
 
-// const getRatings = (req, res) => {
-//   let { id } = req.params;
-//   Product.findOne({ id }).then(result => {
-//     res.status(200).json(result);
-//   });
-// };
-
 // MONGO QUERIES
 
 // GET REQUEST - GET ALL REVIEWS FOR ONE PRODUCT
 
 const getRatings = (req, res) => {
-  let {id} = req.params;
+  console.log('IN GET');
 
-  console.log('IN GET---------');
-  console.time('testGet');
+  let {id} = req.query;
 
   Product.find({id: id})
     .then(result => {
-      console.timeEnd('testGet');
       res.status(200).send(result);
     })
     .catch(err => {
@@ -54,17 +44,17 @@ const getRatings = (req, res) => {
 // POST REQUEST - POST ONE NEW PRODUCT TO THE DATABASE
 
 const createNewProduct = (req, res) => {
-  console.log('IN POST-----------');
-  console.time('testPost');
-
-  id++;
 
   let addedProduct = generateProductData();
+  
+  let {id} = req.body;
+
+  console.log('THIS IS THE ID FOR POST', id);
+
   addedProduct.id = id;
 
   Product.create(addedProduct)
-  .then(result => {
-    console.timeEnd('testPost');
+  .then(() => {
     res.status(201).end();
   })
   .catch(err => {
@@ -75,8 +65,6 @@ const createNewProduct = (req, res) => {
 // DELETE REQUEST - DELETE ONE PRODUCT FROM THE DATABASE
 
 const deleteProduct = (req, res) => {
-  console.log('IN DELETE-----------');
-  console.time('testDelete');
 
   let {id} = req.query;
 
@@ -91,8 +79,6 @@ const deleteProduct = (req, res) => {
 }
 
 const updateProductName = (req, res) => {
-  console.log('IN UPDATE-----------------');
-  console.time('testUpdate');
 
   let { id } = req.query;
   let { productName } = req.body;
@@ -132,7 +118,7 @@ const updateProductName = (req, res) => {
 //   });
 // }
 
-app.get('/ratings/:id', getRatings);
+app.get('/ratings/', getRatings);
 
 app.post('/ratings', createNewProduct);
 

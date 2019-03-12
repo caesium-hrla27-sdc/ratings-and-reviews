@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/reviewsTest');
+mongoose.connect('mongodb://jennifer:password@18.216.145.66:27017/reviews');
 
 var productSchema = new mongoose.Schema({
   id: Number,

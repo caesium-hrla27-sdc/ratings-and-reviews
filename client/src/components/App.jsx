@@ -71,22 +71,19 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/ratings/9000006')
+    axios.get('/ratings', {
+      params: {
+        id: 9990001
+      }
+    })
     .then(results => {
       let data =  results.data[0];
-      console.log(results);
-      console.log('this is fiveStarReviews', data.fiveStarReviews);
-      console.log('this is fourStarReviews', data.fourStarReviews);
-      console.log('this is threeStarReviews', data.threeStarReviews);
-      console.log('this is twoStarReviews', data.twoStarReviews);
-      console.log('this is oneStarReviews', data.oneStarReviews);
       let reviewNum =
         data.fiveStarReviews.length +
         data.fourStarReviews.length +
         data.threeStarReviews.length +
         data.twoStarReviews.length +
         data.oneStarReviews.length;
-      console.log('this is the number of reviews: ', reviewNum);
       let fiveStarCount = data.fiveStarReviews.length;
       let fourStarCount = data.fourStarReviews.length;
       let threeStarCount = data.threeStarReviews.length;

@@ -95,39 +95,39 @@ const generateProductData = () => {
 
 // writer - createWriteStream
 
-let writableStream = fs.createWriteStream('productMongoData.json');
+// let writableStream = fs.createWriteStream('productMongoData.json');
 
-// // writableStream will be "writer" in the function below
+// // // writableStream will be "writer" in the function below
 
 
-function writeTenMillionTimes() {
-  let id = 0;
-  let i = 10000000;
-  write();
-  function write() {
-    let ok = true;
-    do {
-      id++;
-      i--;
-      if (i === 0) {
-        // once the loop is finished, this will write one file to disk
-        writableStream.write(generateMongoData(id));
-        console.log('Finished!!!!!!!!!');
-      } else {
-        // .write adds onto an existing file
-        ok = writableStream.write(generateMongoData(id));
-      }
-    } while (i > 0 && ok);
-    if (i > 0) {
-      // once the drain event is complete, continue to write
-      writableStream.once('drain', write);
-    }
-  }
-}
+// function writeTenMillionTimes() {
+//   let id = 0;
+//   let i = 10000000;
+//   write();
+//   function write() {
+//     let ok = true;
+//     do {
+//       id++;
+//       i--;
+//       if (i === 0) {
+//         // once the loop is finished, this will write one file to disk
+//         writableStream.write(generateMongoData(id));
+//         console.log('Finished!!!!!!!!!');
+//       } else {
+//         // .write adds onto an existing file
+//         ok = writableStream.write(generateMongoData(id));
+//       }
+//     } while (i > 0 && ok);
+//     if (i > 0) {
+//       // once the drain event is complete, continue to write
+//       writableStream.once('drain', write);
+//     }
+//   }
+// }
 
-writeTenMillionTimes();
+// writeTenMillionTimes();
 
-// module.exports = generateProductData;
+module.exports = generateProductData;
 
 
  
