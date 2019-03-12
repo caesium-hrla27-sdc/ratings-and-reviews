@@ -27,7 +27,6 @@ app.use(parser.urlencoded({ extended: true }));
 // GET REQUEST - GET ALL REVIEWS FOR ONE PRODUCT
 
 const getRatings = (req, res) => {
-  console.log('IN GET');
 
   let {id} = req.query;
 
@@ -48,8 +47,6 @@ const createNewProduct = (req, res) => {
   let addedProduct = generateProductData();
   
   let {id} = req.body;
-
-  console.log('THIS IS THE ID FOR POST', id);
 
   addedProduct.id = id;
 

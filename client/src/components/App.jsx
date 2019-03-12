@@ -71,9 +71,11 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    let newId =  Math.floor(Math.random() * (10000000 - 9000000 + 1) + 9000000);
+
     axios.get('/ratings', {
       params: {
-        id: 9990001
+        id: newId
       }
     })
     .then(results => {
