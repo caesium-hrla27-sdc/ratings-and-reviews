@@ -1,8 +1,5 @@
 node_modules
-mongoData.txt
-productData.csv
-reviewData.csv
-nestedProductData.csv
-productMongoData.json
+dump/
+newrelic_agent.log
 newrelic.js
 loaderio-94ff8cbc48ae3517c0335a2b1f938cc4.txt

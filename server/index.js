@@ -45,15 +45,28 @@ const getRatings = (req, res) => {
 
 const createNewProduct = (req, res) => {
 
-  let addedProduct = generateProductData();
+  // let addedProduct = generateProductData();
   
-  let {id} = req.body;
+  let {id, userName, eyeColor, hairColor, skinTone, skinType, ageRange, skinConcerns, date, review} = req.body;
 
-  addedProduct.id = id;
-
-  Product.create(addedProduct)
+  Product.findOneAndUpdate(
+    {id: id}, 
+    {$push: {oneStarReviews: 
+      {
+        "userName": userName,
+        "eyeColor": eyeColor,
+        "hairColor": hairColor,
+        "skinTone": skinTone,
+        "skinType": skinType,
+        "ageRange": ageRange,
+        "skinConcerns": skinConcerns,
+        "date": date,
+        "review": review
+      } 
+    }   
+  })
   .then(() => {
-    res.status(201).end();
+    res.status(201).send('success creating new product');
   })
   .catch(err => {
     res.status(404).send('error creating new product', err);
