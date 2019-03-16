@@ -6,13 +6,23 @@ const path = require('path');
 const PORT = 3003;
 const { Product } = require('../mongoDB/index.js');
 const generateProductData = require('./generateMongoData');
+const redisClient = require('redis').createClient;
+const redis = redisClient(6379, '3.18.113.171');
+
+redis.on('error', (err) => {
+  console.log('error',err);
+  return err;
+})
+redis.on("ready", function () {
+  console.log("Redis is ready");
+});
 
 
 const app = express();
 
 // app.use(morgan('dev'));
-app.use(parser.json());
-app.use(parser.urlencoded({ extended: true }));
+// app.use(parser.json());
+// app.use(parser.urlencoded({ extended: true }));
 
 
 // This function will seed data if none exists
@@ -27,19 +37,47 @@ app.use(parser.urlencoded({ extended: true }));
 
 // GET REQUEST - GET ALL REVIEWS FOR ONE PRODUCT
 
+// this function will need to look in the cache first (Redis)
+  // if found
+      // return result
+  //if not in the cache
+      // look in the database (Mongo)
+      // return result
+
+const findProductByIdCached = function (id, callback) {
+  redis.get(id, function(err, reply) {
+    if (err) {
+      callback(err, null);
+    } else if (reply) { // Product exists in cache
+      callback(reply);
+    } else {
+      // Product doesn't exist in cache - we need to query the main database
+      Product.find({id: id})
+        .then(result => {
+          redis.set(id, JSON.stringify(result), function() {
+            callback(result);
+          });
+        })
+        .catch(err => {
+          callback(err, null)
+        });
+    }
+  })
+}
+
 const getRatings = (req, res) => {
 
   let {id} = req.query;
-
-  Product.find({id: id})
-    .then(result => {
-      res.status(200).send(result);
-    })
-    .catch(err => {
-      res.status(400).send('err getting reviews', err);
-    });
-
+  
+  findProductByIdCached(id, function(product) {
+    if (!product) {
+      res.status(500).end();
+    } else {
+      res.status(200).send(product);
+    }
+  });
 };
+
 
 // POST REQUEST - POST ONE NEW PRODUCT TO THE DATABASE
 
@@ -129,13 +167,13 @@ const updateProductName = (req, res) => {
 //   });
 // }
 
-app.get('/ratings/', getRatings);
+app.get('/ratings', getRatings);
 
-app.post('/ratings', createNewProduct);
+// app.post('/ratings', createNewProduct);
 
-app.delete('/ratings', deleteProduct);
+// app.delete('/ratings', deleteProduct);
 
-app.patch('/ratings', updateProductName);
+// app.patch('/ratings', updateProductName);
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
